@@ -1,0 +1,75 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    background-color: #171923;
+    color: #F5F3EF;
+    font-family: 'Inter', 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Sora', 'Manrope', sans-serif;
+    letter-spacing: -0.02em;
+  }
+}
+
+/* Custom Champagne Gold Scrollbar */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: #171923;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #292C38;
+  border-radius: 4px;
+  border: 1px solid #41414B;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #D8B879;
+}
+
+/* Elegant container and card transitions */
+.luxury-container {
+  background-color: #20232F;
+  border: 1px solid #41414B;
+  border-radius: 1.75rem;
+  box-shadow: 0 16px 40px -12px rgba(0, 0, 0, 0.45);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.luxury-card {
+  background-color: #292C38;
+  border: 1px solid rgba(65, 65, 75, 0.8);
+  border-radius: 1.25rem;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.luxury-card:hover {
+  border-color: rgba(216, 184, 121, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.5), 0 0 16px rgba(216, 184, 121, 0.08);
+}
+
+/* Champagne gold gradient button */
+.btn-gold {
+  background: linear-gradient(135deg, #D8B879 0%, #C49F58 100%);
+  color: #171923;
+  font-weight: 600;
+  border-radius: 0.875rem;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 14px rgba(216, 184, 121, 0.25);
+}
+
+.btn-gold:hover {
+  background: linear-gradient(135deg, #E2C895 0%, #D8B879 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(216, 184, 121, 0.35);
+}

@@ -1,0 +1,93 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 4 0 R >> >> /Contents 5 0 R >>
+endobj
+4 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+5 0 obj
+<< /Length 1716 >>
+stream
+BT
+/F1 20 Tf
+50 740 Td
+(GOWTHAM S) Tj
+/F1 11 Tf
+0 -20 Td
+(Email: gowthamsubra31@gmail.com | Phone: +91 8838441796) Tj
+0 -15 Td
+(LinkedIn: linkedin.com/in/gowtham-subraa96aa1374 | Chennai, India) Tj
+0 -25 Td
+/F1 14 Tf
+(EDUCATION) Tj
+/F1 11 Tf
+0 -18 Td
+(SRM University of Science and Technology, Kattankulathur | 2023 - 2026) Tj
+0 -15 Td
+(BCA - Computer Application | CGPA: 8.78) Tj
+0 -15 Td
+(Master of Computer Applications - MCA | Currently Pursuing) Tj
+0 -15 Td
+(St. Pauls Mahajana Higher Secondary School, Kaladipet, Chennai | HSC: 71%) Tj
+0 -15 Td
+(SMT Mohini Sarogi Vivekananda Vidyalaya, Jothi Nagar, Chennai | SSLC: 76%) Tj
+0 -25 Td
+/F1 14 Tf
+(TECHNICAL SKILLS) Tj
+/F1 10 Tf
+0 -18 Td
+(Programming Languages: Python, Java, C/C++, HTML, JavaScript) Tj
+0 -15 Td
+(Technologies & Analytics: NumPy, Pandas, Matplotlib, Streamlit) Tj
+0 -15 Td
+(Databases: MongoDB, MySQL, SQLite | Operating Systems: Ubuntu Linux) Tj
+0 -25 Td
+/F1 14 Tf
+(EXPERIENCE) Tj
+/F1 10 Tf
+0 -18 Td
+(Approtech R&D Solutions Pvt Ltd - Web Development Intern [Nov - Dec 2025]) Tj
+0 -15 Td
+(- Built Contact Form Web App using Flask and SQLite for inquiry storage.) Tj
+0 -15 Td
+(- Implemented form validation, database integration, and secure processing.) Tj
+0 -25 Td
+/F1 14 Tf
+(PROJECTS) Tj
+/F1 10 Tf
+0 -18 Td
+(1. Phishing URL/message detection website [Python, Streamlit, ML, LLM]) Tj
+0 -15 Td
+(2. Attendance management system [Python, Pandas, CSV, OS]) Tj
+0 -15 Td
+(3. Contact Form Web Application [Python, Flask, SQLite, HTML/JS]) Tj
+0 -25 Td
+/F1 14 Tf
+(CERTIFICATIONS & LANGUAGES) Tj
+/F1 10 Tf
+0 -18 Td
+(- Cyber security [TATA STRIVE] | Python programming [UDEMY]) Tj
+0 -15 Td
+(- Cloud computing [NPTEL-SWAYAM] | Languages: English, Tamil) Tj
+ET
+endstream
+endobj
+xref
+0 6
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000241 00000 n 
+0000000311 00000 n 
+trailer
+<< /Size 6 /Root 1 0 R >>
+startxref
+2079
+%%EOF
