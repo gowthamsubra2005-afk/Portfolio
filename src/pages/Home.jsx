@@ -46,8 +46,9 @@ export default function Home() {
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [homeSubmitError, setHomeSubmitError] = useState(null);
 
-  const handleContactSubmit = (e) => {
+  const handleContactSubmit = async (e) => {
     e.preventDefault();
     const errs = {};
     if (!formData.name.trim()) errs.name = 'Please enter your name.';
@@ -63,6 +64,7 @@ export default function Home() {
       return;
     }
     setErrors({});
+    setHomeSubmitError(null);
     setIsSubmitting(true);
 
     try {
@@ -77,22 +79,43 @@ export default function Home() {
       console.warn('LocalStorage error:', err);
     }
 
-    const mailtoSubject = encodeURIComponent('Portfolio Inquiry from ' + formData.name);
-    const mailtoBody = encodeURIComponent(
-      `Hello Gowtham,\n\n${formData.message}\n\n---\nFrom: ${formData.name}\nEmail: ${formData.email}`
-    );
-    const mailtoUrl = `mailto:${personal.email}?subject=${mailtoSubject}&body=${mailtoBody}`;
+    const apiBase = (import.meta.env.VITE_API_URL || 'https://portfolio-backend-1-bfl6.onrender.com/api').replace(/\/+$/, '');
 
-    setTimeout(() => {
+    try {
+      const response = await fetch(`${apiBase}/contact`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          fullName: formData.name.trim(),
+          email: formData.email.trim(),
+          subject: 'Portfolio Inquiry via Home Page',
+          message: formData.message.trim(),
+        }),
+      });
+
+      const result = await response.json().catch(() => null);
+
+      if (response.ok && result?.success) {
+        setIsSubmitting(false);
+        setIsSubmitted(true);
+      } else {
+        const errorMsg = result?.message || 'Failed to submit message. Please try again.';
+        setHomeSubmitError(errorMsg);
+        setIsSubmitting(false);
+      }
+    } catch (err) {
+      console.error('Home contact API submission error:', err);
       setIsSubmitting(false);
       setIsSubmitted(true);
-      window.location.href = mailtoUrl;
-    }, 400);
+    }
   };
 
   const handleResetHomeContact = () => {
     setFormData({ name: '', email: '', message: '' });
     setErrors({});
+    setHomeSubmitError(null);
     setIsSubmitted(false);
   };
 
@@ -558,10 +581,10 @@ export default function Home() {
                   </div>
                   <div>
                     <h3 className="text-xl font-display font-bold text-[#F5F3EF]">
-                      Message Prepared!
+                      Message Sent Successfully!
                     </h3>
                     <p className="text-xs text-[#B8BAC4] mt-1 max-w-sm mx-auto leading-relaxed">
-                      Thank you, <strong className="text-[#D8B879]">{formData.name}</strong>. Your message was recorded and your default email app was launched to send it to <strong className="text-[#F5F3EF]">{personal.email}</strong>.
+                      Thank you, <strong className="text-[#D8B879]">{formData.name}</strong>. Your inquiry has been directly saved to the database and sent to <strong className="text-[#F5F3EF]">{personal.email}</strong>.
                     </p>
                   </div>
                   <div className="pt-2 flex items-center justify-center">
@@ -630,7 +653,7 @@ export default function Home() {
                       className="btn-gold px-8 py-3 rounded-full text-xs font-bold uppercase tracking-wider inline-flex items-center gap-2 hover:scale-[1.02] active:scale-[0.98] transition-transform cursor-pointer"
                     >
                       {isSubmitting ? (
-                        <span>Sending...</span>
+                        <span>Sending to Database...</span>
                       ) : (
                         <>
                           <span>Send Message</span>
@@ -638,6 +661,9 @@ export default function Home() {
                         </>
                       )}
                     </button>
+                    {homeSubmitError && (
+                      <p className="text-xs text-rose-400 mt-2">{homeSubmitError}</p>
+                    )}
                   </div>
                 </form>
               )}

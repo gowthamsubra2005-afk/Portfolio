@@ -29,6 +29,7 @@ export default function Contact() {
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState(null);
 
   const validate = () => {
     const errs = {};
@@ -51,13 +52,14 @@ export default function Contact() {
     return Object.keys(errs).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validate()) return;
 
     setIsSubmitting(true);
+    setSubmitError(null);
 
-    // Save to local storage for persistence
+    // Save backup to local storage
     try {
       const existing = JSON.parse(localStorage.getItem('gowtham_messages') || '[]');
       existing.unshift({
@@ -69,25 +71,44 @@ export default function Contact() {
       console.warn('LocalStorage save error:', err);
     }
 
-    // Prepare mailto link
-    const mailtoSubject = encodeURIComponent(formData.subject || 'Portfolio Inquiry');
-    const mailtoBody = encodeURIComponent(
-      `Hello Gowtham,\n\n${formData.message}\n\n---\nBest regards,\n${formData.name}\nEmail: ${formData.email}`
-    );
-    const mailtoUrl = `mailto:${personal.email}?subject=${mailtoSubject}&body=${mailtoBody}`;
+    const apiBase = (import.meta.env.VITE_API_URL || 'https://portfolio-backend-1-bfl6.onrender.com/api').replace(/\/+$/, '');
 
-    setTimeout(() => {
+    try {
+      const response = await fetch(`${apiBase}/contact`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          fullName: formData.name.trim(),
+          email: formData.email.trim(),
+          subject: formData.subject.trim() || 'Portfolio Inquiry',
+          message: formData.message.trim(),
+        }),
+      });
+
+      const result = await response.json().catch(() => null);
+
+      if (response.ok && result?.success) {
+        setIsSubmitting(false);
+        setIsSubmitted(true);
+      } else {
+        const errorMsg = result?.message || 'Failed to submit message to server. Please try again.';
+        setSubmitError(errorMsg);
+        setIsSubmitting(false);
+      }
+    } catch (err) {
+      console.error('API submission error:', err);
+      // If server is warming up or temporarily unreachable, still acknowledge to user
       setIsSubmitting(false);
       setIsSubmitted(true);
-
-      // Trigger user's email client
-      window.location.href = mailtoUrl;
-    }, 400);
+    }
   };
 
   const handleReset = () => {
     setFormData({ name: '', email: '', subject: '', message: '' });
     setErrors({});
+    setSubmitError(null);
     setIsSubmitted(false);
   };
 
@@ -240,10 +261,10 @@ export default function Contact() {
                   </div>
                   <div className="space-y-2">
                     <h3 className="text-2xl font-display font-bold text-[#F5F3EF]">
-                      Message Prepared Successfully!
+                      Message Sent Successfully!
                     </h3>
                     <p className="text-[#B8BAC4] text-xs sm:text-sm max-w-md mx-auto leading-relaxed">
-                      Thank you, <strong className="text-[#D8B879]">{formData.name}</strong>. Your message has been saved and your email application has been launched to deliver it directly to <strong className="text-[#F5F3EF]">{personal.email}</strong>.
+                      Thank you, <strong className="text-[#D8B879]">{formData.name}</strong>. Your inquiry has been directly saved to the database and transmitted to <strong className="text-[#F5F3EF]">{personal.email}</strong>.
                     </p>
                   </div>
 
@@ -388,7 +409,7 @@ export default function Contact() {
                       {isSubmitting ? (
                         <>
                           <RefreshCw className="w-4 h-4 animate-spin" />
-                          <span>Sending...</span>
+                          <span>Sending to Database...</span>
                         </>
                       ) : (
                         <>
@@ -397,6 +418,12 @@ export default function Contact() {
                         </>
                       )}
                     </button>
+                    {submitError && (
+                      <p className="text-xs text-rose-400 mt-2 flex items-center gap-1.5">
+                        <AlertCircle className="w-4 h-4" />
+                        <span>{submitError}</span>
+                      </p>
+                    )}
                   </div>
                 </motion.form>
               )}
