@@ -99,9 +99,8 @@ export default function Contact() {
       }
     } catch (err) {
       console.error('API submission error:', err);
-      // If server is warming up or temporarily unreachable, still acknowledge to user
+      setSubmitError('Unable to connect to backend server. Please try again.');
       setIsSubmitting(false);
-      setIsSubmitted(true);
     }
   };
 

@@ -107,8 +107,8 @@ export default function Home() {
       }
     } catch (err) {
       console.error('Home contact API submission error:', err);
+      setHomeSubmitError('Unable to connect to backend server. Please try again.');
       setIsSubmitting(false);
-      setIsSubmitted(true);
     }
   };
 
